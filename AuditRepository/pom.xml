@@ -9,6 +9,54 @@
     <artifactId>AuditRepositoryWebservices</artifactId>
     <packaging>jar</packaging>
     <name>Audit Respository Web services</name>
-    
+    <build>
+        <plugins>
+            <plugin>
+                 <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <version>2.7.3</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <configuration>
+                            <fork>once</fork>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <sourceRoot>${project.build.directory}/generated-sources</sourceRoot>
+                            <classesDirectory>${project.build.directory}/wsdl2java-sources/</classesDirectory>
+                            <wsdlRoot>${project.build.directory}/wsdl2java-sources/</wsdlRoot>
+                            <includes>
+                                <include>**/wsdl/*.wsdl</include>
+                            </includes>
+                            <defaultOptions>
+                                <extraargs>
+                                
+                                    <extraarg>-verbose</extraarg>
+                                    <extraarg>-all</extraarg>
+                                    <extraarg>-dns</extraarg>
+                                    <extraarg>false</extraarg>                                          
+                                    <extraarg>-noTypes</extraarg>
+                                    <extraarg>-mark-generated</extraarg>
+                                    <!-- next two are a pair -->
+                                    <extraarg>-wsdlLocation</extraarg>                                    
+                                    <extraarg />                                    
+                                </extraargs>
+                                <noAddressBinding>true</noAddressBinding>
+                               <!-- <bindingFiles>
+                                      <bindingFile>${basedir}/src/main/resources/async_binding.xml</bindingFile>
+                                     </bindingFiles>
+                                      --> 
+                                     <asyncMethods>
+                                        <asyncMethod>logEvent</asyncMethod>
+                                     </asyncMethods>
+                            </defaultOptions>
+                        </configuration>
+                        <goals>
+                            <goal>wsdl2java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
    
 </project>
